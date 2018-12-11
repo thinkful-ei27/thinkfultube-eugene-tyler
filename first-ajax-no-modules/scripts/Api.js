@@ -2,7 +2,7 @@
 const Api = (function(){
 
   const BASE_URL = 'https://www.googleapis.com/youtube/v3/search';
-  
+  const API_KEY = 'AIzaSyCUw3GT00dV11Ki1S--E4ULDjlqlJoDAC8';
   const fetchVideos = function(searchTerm, callback){
     const query = {
       'part': 'snippet',
