@@ -1,4 +1,5 @@
-const API_KEY = 'YOUR_KEY_HERE';
+'use strict';
+const API_KEY = "AIzaSyCUw3GT00dV11Ki1S--E4ULDjlqlJoDAC8";
 
 /*
   We want our store to hold an array of "decorated" video objects - i.e. objects that
@@ -19,15 +20,21 @@ const store = {
 
 // TASK: Add the Youtube Search API Base URL here:
 // Documentation is here: https://developers.google.com/youtube/v3/docs/search/list#usage
-const BASE_URL = '';
+const BASE_URL = 'https://www.googleapis.com/youtube/v3/search';
 
-/**
- * @function fetchVideos
- * Async function, responsible for calling the Youtube API with jQuery, constructing
- * the correct query object, and passing along the callback into the AJAX call.
- * @param {string}   searchTerm
- * @param {function} callback
- */
+//  * Async function, responsible for calling the Youtube API with jQuery, constructing
+//  * the correct query object, and passing along the callback into the AJAX call.
+//  * @param {string}   searchTerm
+//  * @param {function} callback
+//  */
+const fetchVideos = function(searchTerm, callback){
+  const query = {
+    'part': 'snippet',
+    'key': API_KEY,
+    'q': `${searchTerm}`,
+  };
+  $.getJSON(BASE_URL, query, callback);
+}
 // TASK:
 // 1. Use `searchTerm` to construct the right query object based on the Youtube API docs
 //    - Refer to curriculum assignment for help with the required parameters
@@ -35,9 +42,7 @@ const BASE_URL = '';
 //    as the last argument
 //
 // TEST IT! Execute this function and console log the results inside the callback.
-const fetchVideos = function(searchTerm, callback) {
-
-};
+const testData = fetchVideos('surfing', );
 
 /**
  * @function decorateResponse
@@ -55,7 +60,14 @@ const fetchVideos = function(searchTerm, callback) {
 // TEST IT! Grab an example API response and send it into the function - make sure
 // you get back the object you want.
 const decorateResponse = function(response) {
-
+  return response.items.map(item => {
+    return {
+      id: item.id.videoId,
+      title: item.snippet.title,
+      thumbnail: item.snippet.thumbnails.default.url,
+    };
+  });
+  // need to return items.id.videoId, items.snippet.thumbnails.default, items.snippet.title
 };
 
 /**
