@@ -61,7 +61,7 @@ const fetchVideos = function(searchTerm, callback){
 // TEST IT! Grab an example API response and send it into the function - make sure
 // you get back the object you want.
 const decorateResponse = function(response) {
-  const result = response.items.map(item => {
+  let result = response.items.map(item => {
     return {
       id: item.id.videoId,
       title: item.snippet.title,
@@ -82,7 +82,7 @@ const decorateResponse = function(response) {
 // 1. Using the decorated object, return an HTML string containing all the expected
 // TEST IT!
 const generateVideoItemHtml = function(video) {
-    `<li data-video-id = "${video.id}">
+    return `<li data-video-id = "${video.id}">
       <img src = "${video.thumbnail}"/>
       <h3>${video.title}</h3>
     </li>`;
@@ -112,7 +112,7 @@ const addVideosToStore = function(videos) {
 // TEST IT!
 const render = function() {
   const videoElements = store.videos.map(video => generateVideoItemHtml(video));
-  $('.result').html(videoElements);
+  $('.results').html(videoElements);
 };
 
 /**
@@ -132,7 +132,7 @@ const render = function() {
 //   g) Inside the callback, run the `render` function 
 // TEST IT!
 const handleFormSubmit = function() {
-  $('form').submit(function(event) {
+  $('form').on('submit', function() {
     event.preventDefault();
     const searchTermName = $('#search-term').val();
     $('#search-term').val('');
@@ -141,6 +141,7 @@ const handleFormSubmit = function() {
       addVideosToStore(decoratedVideos);
       render();
     });
+});
 };
 
 // When DOM is ready:
